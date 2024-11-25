@@ -6,12 +6,18 @@ require "singleton"
 require "nats/client"
 
 module Ikibana
+  class ICache
+
+    def write = raise NotImplementedError, "Subclasses must implement a `store` method"
+    def read = raise NotImplementedError, "Subclasses must implement a `fetch` method"
+  end
+
   # Configuration class for NATS
   class Config
     include Singleton
 
     attr_reader :config, :connection_string, :nats, :js
-    attr_accessor :logger, :consumers
+    attr_accessor :logger, :consumers, :cache
 
     def initialize(config_file = "config/nats.yaml")
       @config = load_config(config_file)

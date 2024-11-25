@@ -6,7 +6,6 @@ module Ikibana
   class ApplicationConsumer
     private_class_method def self.inherited(subclass)
       subclass.include Ikibana::Consumer
-      subclass.extend Ikibana::Consumer
     end
 
     def self.call
@@ -14,24 +13,34 @@ module Ikibana
     end
 
     def call
-      Ractor.new do
-        subscription = connection.pull_subscribe(convert_namespace_to_path)
+      Thread.new do
         loop do
-          subscription.fetch(5).each do |msg|
+          sub.fetch(1).each do |msg|
             perform(msg)
+            msg.ack
           end
+        rescue NATS::IO::Timeout
+          puts "Awaiting messages for #{convert_namespace_to_path}..."
         end
       end
     end
 
     private
 
-    def convert_namespace_to_path
-      self.class.to_s.split('::').map(&:downcase).join('.')
+    def sub
+      @sub ||= js.pull_subscribe(convert_namespace_to_path, self.class.to_s.sub("::", "_"))
     end
 
-    def connection
-      @connection ||= Ikibana::Config.instance.js
+    def convert_namespace_to_path
+      self.class.to_s.split('::').map(&:downcase).join('.').sub("consumer", "")
+    end
+
+    def logger
+      @logger = Ikibana::Config.instance.logger
+    end
+
+    def js
+      @js ||= Ikibana::Config.instance.js
     end
 
     def perform(msg)
