@@ -8,7 +8,7 @@ module Ikibana
     railtie_name :active_transaction
 
     rake_tasks do
-      load "tasks/active_transaction_tasks.rake"
+      load "tasks/ikibana_tasks.rake"
     end
   end
 end
