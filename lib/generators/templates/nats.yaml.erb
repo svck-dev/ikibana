@@ -1,0 +1,6 @@
+connection:
+  url: <%%= ENV.fetch('NATS_URL', 'nats://localhost:4222') %>
+streams:
+  # Here you define your streams and their subjects
+#  - name: 'EXAMPLE'
+#    subjects: ['example.*', 'example.a.*']
