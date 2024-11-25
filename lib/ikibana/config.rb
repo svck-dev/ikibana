@@ -18,6 +18,10 @@ module Ikibana
       @logger = Logger.new(STDOUT)
       connect
       create_streams
+    rescue NATS::IO::Timeout
+      @logger.error("NATS server not responding")
+    rescue Exception => e
+      @logger.error("#{e.class}: Error connecting to NATS server: #{e.message}")
     end
 
     def self.configure(config_file = "config/nats.yaml")
@@ -29,8 +33,7 @@ module Ikibana
 
     def create_streams
       @config['streams'].each do |stream|
-        @logger.debug("Creating stream #{stream['name']} with subjects #{stream['subjects']}")
-        @js.add_stream(name: stream['name'], subject: stream['subjects'])
+        @js.add_stream(**stream.transform_keys(&:to_sym))
       end
     end
 
