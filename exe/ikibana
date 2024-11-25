@@ -2,3 +2,5 @@
 # frozen_string_literal: true
 
 require "ikibana"
+
+puts "Hello, world!"
