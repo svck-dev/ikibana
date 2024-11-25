@@ -200,7 +200,7 @@ PLATFORMS
 
 DEPENDENCIES
   ikibana!
-  rails (= 7.0)
+  rails (>= 7.0)
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.21)
