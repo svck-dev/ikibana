@@ -1,8 +1,6 @@
 #frozen_string_literal: true
 
-class <%= class_name %>Consumer
-  include Ikibana::Consumer
-
+class <%= class_name %>Consumer < Ikibana::ApplicationConsumer
   private
   def perform(*args)
     # Do something
