@@ -11,7 +11,7 @@ module Ikibana
     include Singleton
 
     attr_reader :config, :connection_string, :nats, :js
-    attr_accessor :logger
+    attr_accessor :logger, :consumers
 
     def initialize(config_file = "config/nats.yaml")
       @config = load_config(config_file)
