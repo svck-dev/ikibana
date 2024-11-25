@@ -8,11 +8,17 @@ module Ikibana
       mod.include ClassMethods
     end
 
+
     module ClassMethods
       def at_most_once
-        debugger
-        Ikibana::Config.instance.cache.write("#{self.to_s}_at_most_once", true)
-        "#{self.to_s}_at_most_once"
+        cache.write("#{self.to_s}_locked", true)
+      end
+
+      def destructor(...)
+        cache.write("#{self.to_s}_locked", false)
+      end
+      def cache
+        Ikibana::Config.instance.cache
       end
     end
   end

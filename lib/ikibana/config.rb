@@ -32,7 +32,6 @@ module Ikibana
     end
 
     def self.configure(config_file = "config/nats.yaml")
-      instance = new(config_file)
       yield instance if block_given?
     end
 

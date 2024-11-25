@@ -8,6 +8,11 @@ module Ikibana
       subclass.include Ikibana::Consumer
     end
 
+    def initialize
+      super
+      ObjectSpace.define_finalizer(self, self.class.method(:destructor).to_proc)
+    end
+
     def self.call
       new.call
     end
