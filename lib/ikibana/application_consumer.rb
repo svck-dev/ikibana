@@ -18,6 +18,15 @@ module Ikibana
     end
 
     def call
+      return if locked?
+      return run_in_sync if sync?
+
+      run_async
+    end
+
+    private
+
+    def run_async
       Thread.new do
         loop do
           sub.fetch(1).each do |msg|
@@ -30,7 +39,9 @@ module Ikibana
       end
     end
 
-    private
+    def run_in_sync
+      # code here
+    end
 
     def sub
       @sub ||= js.pull_subscribe(convert_namespace_to_path, self.class.to_s.sub("::", "_"))
@@ -46,6 +57,14 @@ module Ikibana
 
     def js
       @js ||= Ikibana::Config.instance.js
+    end
+
+    def locked? = cache.read("#{self.class.to_s}_locked")
+
+    def sync? = cache.read("#{self.class.to_s}_sync")
+
+    def cache
+      @cache = Ikibana::Config.instance.cache
     end
 
     def perform(msg)

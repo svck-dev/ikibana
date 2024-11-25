@@ -7,9 +7,8 @@ require "nats/client"
 
 module Ikibana
   class ICache
-
-    def write = raise NotImplementedError, "Subclasses must implement a `store` method"
-    def read = raise NotImplementedError, "Subclasses must implement a `fetch` method"
+    def write(...) = raise NotImplementedError, "Subclasses must implement a `write` method"
+    def read(...) = raise NotImplementedError, "Subclasses must implement a `read` method"
   end
 
   # Configuration class for NATS
