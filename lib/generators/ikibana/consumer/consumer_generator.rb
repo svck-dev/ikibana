@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ikibana
-  class WorkerGenerator < Rails::Generators::NamedBase
+  class ConsumerGenerator < Rails::Generators::NamedBase
     source_root File.expand_path("../../templates", __dir__)
 
     def create_worker
