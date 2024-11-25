@@ -10,16 +10,16 @@ module Ikibana
 
     module ClassMethods
       def at_most_once
-        cache.write("#{self.to_s}_locked", true)
+        cache.write("#{self}_locked", true)
       end
 
       def sync(...)
-        cache.write("#{self.to_s}_locked", false)
-        cache.write("#{self.to_s}_sync", true)
+        cache.write("#{self}_locked", false)
+        cache.write("#{self}_sync", true)
       end
 
       def destructor(...)
-        cache.write("#{self.to_s}_locked", false)
+        cache.write("#{self}_locked", false)
       end
 
       def cache

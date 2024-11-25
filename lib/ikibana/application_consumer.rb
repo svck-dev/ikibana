@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'consumer'
+require_relative "consumer"
 
 module Ikibana
   class ApplicationConsumer
@@ -48,7 +48,7 @@ module Ikibana
     end
 
     def convert_namespace_to_path
-      self.class.to_s.split('::').map(&:downcase).join('.').sub("consumer", "")
+      self.class.to_s.split("::").map(&:downcase).join(".").sub("consumer", "")
     end
 
     def logger
@@ -59,9 +59,9 @@ module Ikibana
       @js ||= Ikibana::Config.instance.js
     end
 
-    def locked? = cache.read("#{self.class.to_s}_locked")
+    def locked? = cache.read("#{self.class}_locked")
 
-    def sync? = cache.read("#{self.class.to_s}_sync")
+    def sync? = cache.read("#{self.class}_sync")
 
     def cache
       @cache = Ikibana::Config.instance.cache
