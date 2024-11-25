@@ -2,13 +2,22 @@
 
 require 'yaml'
 require 'erb'
+require 'singleton'
+require 'nats/client'
 
 module Ikibana
   class Config
-    attr_reader :config
+    include Singleton
+
+    attr_reader :config, :connection_string, :nats, :js
+    attr_accessor :logger
 
     def initialize(config_file = "config/nats.yaml")
       @config = load_config(config_file)
+      @connection_string = @config['connection']['url']
+      @logger = Logger.new(STDOUT)
+      connect
+      create_streams
     end
 
     def self.configure(config_file = "config/nats.yaml")
@@ -17,6 +26,23 @@ module Ikibana
     end
 
     private
+
+    def create_streams
+      @config['streams'].each do |stream|
+        @logger.debug("Creating stream #{stream['name']} with subjects #{stream['subjects']}")
+        @js.add_stream(name: stream['name'], subject: stream['subjects'])
+      end
+    end
+
+    def connect
+      @nats ||= NATS.connect(@connection_string)
+      @js ||= @nats.jetstream
+      @logger.debug("Connected to NATS server at #{nats_host}")
+    end
+
+    def nats_host
+      @nats_host ||= URI.parse(@connection_string).host
+    end
 
     def load_config(file)
       if File.exist?(file)
