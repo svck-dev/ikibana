@@ -8,6 +8,7 @@ module Ikibana
 
       def create_directories
         template "nats.yaml.erb", "config/nats.yaml"
+        template "configure.rb.erb", "config/initializers/ikibana.rb"
       end
     end
   end
