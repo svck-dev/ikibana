@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require 'yaml'
-require 'erb'
-require 'singleton'
-require 'nats/client'
+require "yaml"
+require "erb"
+require "singleton"
+require "nats/client"
 
 module Ikibana
+  # Configuration class for NATS
   class Config
     include Singleton
 
@@ -14,13 +15,13 @@ module Ikibana
 
     def initialize(config_file = "config/nats.yaml")
       @config = load_config(config_file)
-      @connection_string = @config['connection']['url']
-      @logger = Logger.new(STDOUT)
+      @connection_string = @config["connection"]["url"]
+      @logger = Logger.new($stdout)
       connect
       create_streams
     rescue NATS::IO::Timeout
       @logger.error("NATS server not responding")
-    rescue Exception => e
+    rescue StandardError => e
       @logger.error("#{e.class}: Error connecting to NATS server: #{e.message}")
     end
 
@@ -32,7 +33,7 @@ module Ikibana
     private
 
     def create_streams
-      @config['streams'].each do |stream|
+      @config["streams"].each do |stream|
         @js.add_stream(**stream.transform_keys(&:to_sym))
       end
     end
@@ -48,12 +49,10 @@ module Ikibana
     end
 
     def load_config(file)
-      if File.exist?(file)
-        erb = ERB.new(File.read(file))
-        YAML.safe_load(erb.result, aliases: true)
-      else
-        raise "Configuration file #{file} not found"
-      end
+      raise "Configuration file #{file} not found" unless File.exist?(file)
+
+      erb = ERB.new(File.read(file))
+      YAML.safe_load(erb.result, aliases: true)
     rescue Psych::SyntaxError => e
       raise "YAML syntax error occurred while parsing #{file}: #{e.message}"
     end
