@@ -1,3 +1,8 @@
+This project includes the following third-party libraries:
+
+- [nats-pure.rb] - Licensed under the Apache License, Version 2.0
+  [https://github.com/nats-io/nats-pure.rb]
+
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
