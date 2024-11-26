@@ -1,7 +1,22 @@
 This project includes the following third-party libraries:
 
-- [nats-pure.rb] - Licensed under the Apache License, Version 2.0
-  [https://github.com/nats-io/nats-pure.rb]
+- nats-pure - Licensed under the Apache License, Version 2.0
+  https://github.com/nats-io/nats-pure.rb
+
+- debug - Licensed under the BSD 2-Clause "Simplified" License
+  https://github.com/ruby/debug
+
+- rails - Licensed under the MIT License
+  https://github.com/rails/rails
+
+- rake - Licensed under the MIT License
+  https://github.com/ruby/rake
+
+- rspec - Licensed under the MIT License
+  https://rubygems.org/gems/rspec
+
+- rubocop - Licensed under the MIT License
+  https://github.com/rubocop/rubocop
 
                                  Apache License
                            Version 2.0, January 2004
