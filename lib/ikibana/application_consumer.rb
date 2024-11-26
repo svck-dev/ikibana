@@ -5,6 +5,7 @@ require_relative "consumer"
 module Ikibana
   class ApplicationConsumer
     private_class_method def self.inherited(subclass)
+      super
       subclass.include Ikibana::Consumer
     end
 

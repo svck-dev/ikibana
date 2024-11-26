@@ -7,8 +7,13 @@ require "nats/client"
 
 module Ikibana
   class ICache
-    def write(...) = raise NotImplementedError, "Subclasses must implement a `write` method"
-    def read(...) = raise NotImplementedError, "Subclasses must implement a `read` method"
+    def write(...)
+      raise NotImplementedError, "Subclasses must implement a `write` method"
+    end
+
+    def read(...)
+      raise NotImplementedError, "Subclasses must implement a `read` method"
+    end
   end
 
   # Configuration class for NATS
@@ -30,7 +35,7 @@ module Ikibana
       @logger.error("#{e.class}: Error connecting to NATS server: #{e.message}")
     end
 
-    def self.configure(config_file = "config/nats.yaml")
+    def self.configure(_config_file = "config/nats.yaml")
       yield instance if block_given?
     end
 
