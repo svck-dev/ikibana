@@ -6,7 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "debug", "~> 1.9"
-gem "rails", ">= 7.0"
+gem "rails", "~> 7.0"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 gem "rubocop", "~> 1.69"
