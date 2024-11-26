@@ -70,3 +70,5 @@ At the moment there are only two options available for configuration:
 | Test coverage                          | To be implemented                                       |
 | Documentation                          | To be improved                                          |
 | Examples                               | To be implemented                                       |
+| Complete Rails integration             | To be implemented                                       |
+| Stand alone mode                       | To be implemented                                       |
