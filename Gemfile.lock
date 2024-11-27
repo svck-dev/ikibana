@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ikibana (0.1.1)
+    ikibana (0.1.2)
       nats-pure
 
 GEM
