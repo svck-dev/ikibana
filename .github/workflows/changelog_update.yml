@@ -5,9 +5,12 @@ on:
     tags:
       - 'v*'
   workflow_dispatch: { }
-
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
-  build:
+  update:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,8 +25,14 @@ jobs:
           git config user.email "<>"
       - name: Generate and push changelog
         run: |
-          bundle exec github_changelog_generator -u svck-dev -p ikibana;
-          git add CHANGELOG.md;
-          git commit -m "[skip ci] Update changelog";
-          git push;
-          
+          if ! bundle exec github_changelog_generator -u "$GITHUB_REPOSITORY_OWNER" -p "$(basename $GITHUB_REPOSITORY)"; then
+            echo "Failed to generate changelog"
+            exit 1
+          fi
+          if [[ -n $(git status --porcelain CHANGELOG.md) ]]; then
+            git add CHANGELOG.md
+            git commit -m "[skip ci] Update changelog"
+            git push
+          else
+            echo "No changes to changelog"
+          fi
