@@ -5,7 +5,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in ikibana.gemspec
 gemspec
 
-gem "debug", "~> 1.9"
+gem "debug", "~> 1.10"
 gem "github_changelog_generator", "~> 1.16"
 gem "rails", "~> 7.0"
 gem "rake", "~> 13.0"
